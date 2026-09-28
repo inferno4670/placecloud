@@ -13,6 +13,11 @@ from app.api.v1.api import api_router
 async def lifespan(app: FastAPI):
     # Create tables on startup
     Base.metadata.create_all(bind=engine)
+    try:
+        from app.seed import seed
+        seed()
+    except Exception as e:
+        print(f"Startup seed notice: {e}")
     yield
 
 app = FastAPI(
