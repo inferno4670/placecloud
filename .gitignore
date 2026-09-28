@@ -1,0 +1,41 @@
+# ── Python / Backend ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+env/
+backend/placecloud.db
+backend/uploads/
+backend/.pytest_cache/
+backend/htmlcov/
+.coverage
+
+# ── Node / Frontend ────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+*.local
+
+# ── OS / Editor ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Railway / Deployment ───────────────────────────────────────────
+.railway/
