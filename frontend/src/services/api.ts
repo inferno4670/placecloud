@@ -40,6 +40,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
+      // Don't redirect or clear on failed login endpoint attempt
+      const url = error.config?.url || '';
+      if (url.includes('/auth/login')) {
+        return Promise.reject(error);
+      }
       localStorage.removeItem('placecloud_token');
       localStorage.removeItem('placecloud_user');
       if (window.location.pathname !== '/login') {

@@ -17,15 +17,11 @@ export const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await login(email, password);
-      const userStr = localStorage.getItem('placecloud_user');
-      if (userStr) {
-        const user = JSON.parse(userStr);
-        if (user.role === 'STUDENT') {
-          navigate('/student/dashboard');
-        } else {
-          navigate('/admin/dashboard');
-        }
+      const loggedInUser = await login(email, password);
+      if (loggedInUser.role === 'STUDENT') {
+        navigate('/student/dashboard', { replace: true });
+      } else {
+        navigate('/admin/dashboard', { replace: true });
       }
     } catch (err: any) {
       if (!err.response) {
