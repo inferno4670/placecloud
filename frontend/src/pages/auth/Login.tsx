@@ -28,9 +28,15 @@ export const Login: React.FC = () => {
         }
       }
     } catch (err: any) {
-      setError(
-        err.response?.data?.detail || 'Authentication failed. Please verify your credentials.'
-      );
+      if (!err.response) {
+        setError(
+          `Unable to connect to the backend server (${err.message || 'Network Error'}). Make sure your backend service is running and VITE_API_URL is configured.`
+        );
+      } else {
+        setError(
+          err.response?.data?.detail || 'Authentication failed. Please verify your credentials.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }

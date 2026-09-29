@@ -1,13 +1,23 @@
 import axios from 'axios';
 
-// In production (Railway), VITE_API_URL is set to the deployed backend URL.
-// In development, falls back to '/api/v1' which Vite proxies to localhost:8000.
-const API_BASE = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/api/v1`
-  : '/api/v1';
+function getApiBase(): string {
+  let url = (import.meta.env.VITE_API_URL as string | undefined) || '';
+  if (!url) {
+    return '/api/v1';
+  }
+  url = url.trim();
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  url = url.replace(/\/+$/, '');
+  if (!url.endsWith('/api/v1')) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+}
 
 const api = axios.create({
-  baseURL: API_BASE,
+  baseURL: getApiBase(),
   headers: {
     'Content-Type': 'application/json',
   },

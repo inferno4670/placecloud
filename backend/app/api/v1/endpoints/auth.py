@@ -100,3 +100,14 @@ def change_password(
     current_user.hashed_password = get_password_hash(data.new_password)
     db.commit()
     return {"message": "Password changed successfully"}
+
+@router.post("/seed-database")
+def seed_database(db: Session = Depends(get_db)):
+    """Seed the database with default demo accounts if not already seeded."""
+    try:
+        from app.seed import seed
+        seed()
+        return {"status": "success", "message": "Database seeded with demo users and drives"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Seeding error: {str(e)}")
+
